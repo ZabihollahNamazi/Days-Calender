@@ -5,13 +5,7 @@
 
 import { getGreeting } from "./common.mjs";
 import daysData from "./days.json" with { type: "json" };
-let year = new Date().getFullYear();
-let month = new Date().getMonth();
-let fistDayOfWeek = new Date(year, month, 1).getDay();
-fistDayOfWeek = fistDayOfWeek == 0 ? 6 : fistDayOfWeek == 6 ? 0 : fistDayOfWeek - 1;
-console.log(fistDayOfWeek)
-console.log(year, " ", month)
-console.log("total days, " , new Date(year, month + 2, 0).getDate())
+
 function displayCalender(year, month){
     let fistDayOfWeek = new Date(year, month, 1).getDay(); // gets first day of week (0-6), in computer starts from sunday = 0
     fistDayOfWeek = fistDayOfWeek == 0 ? 6 : fistDayOfWeek == 6 ? 0 : fistDayOfWeek - 1; // formatted to start from monday = 0
@@ -49,11 +43,36 @@ function displayCalender(year, month){
             dayCount++;
         }
         table.appendChild(newRow)
-        
-
     }
 }
 
+function preNextBtn(year, month){
+    let previousBtn = document.getElementById("previous");
+    let next = document.getElementById("next");
+
+    previousBtn.addEventListener("click", ()=>{
+        let preMonth = month - 1;
+        let preYear = year;
+        if(month < 0){
+            preMonth = 11;
+            preYear--;
+        }
+        displayCalender(preYear, preMonth)
+    })
+
+    next.addEventListener("click", ()=>{
+        let nextMonth = month + 1;
+        let nextYear = year;
+        if(month > 11){
+            nextMonth = 0;
+            nextYear++
+        }
+        displayCalender(nextYear, nextMonth)
+    })
+}
 window.onload = function() {
-    displayCalender(2025, 3)
+    let year = new Date().getFullYear();
+    let month = new Date().getMonth();
+    displayCalender(year, month)
+    preNextBtn(year, month)
 }
