@@ -9,7 +9,15 @@ import daysData from "./days.json" with { type: "json" };
 let year = new Date().getFullYear();
 let month = new Date().getMonth();
 
+const monthsName = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
 function displayCalender(year, month){
+    let dateLabel = document.getElementById("date-label");// h3 tag to show the date
+    dateLabel.innerHTML = `${year}-${monthsName[month]}`; // h3 tag to show the date
+
     let fistDayOfWeek = new Date(year, month, 1).getDay(); // gets first day of week (0-6), in computer starts from sunday = 0
     fistDayOfWeek = fistDayOfWeek == 0 ? 6 : fistDayOfWeek - 1; // formatted to start from monday = 0
     let dayCount = 1;
@@ -68,7 +76,7 @@ function preNextBtn(){
         month--;
         if(month < 0){
             month = 11;
-            preYear--;
+            year--;
         }
         displayCalender(year, month)
     })
@@ -77,29 +85,25 @@ function preNextBtn(){
         month++;
         if(month > 11){
             month = 0;
-            nextYear++
+            year++;
         }
         displayCalender(year, month)
     })
 }
 
 function selectDropDown(){
-    const monthsName = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-      ];
 
     let monthDropDown = document.getElementById("select-month");
     let yearDropDown = document.getElementById("select-year");
 
-    for(let m = 0; m < monthsName.length; m++){
+    for(let m = 0; m < monthsName.length; m++){ // loop to add months in dropdown
         let option = document.createElement("option");
         option.id = m;
         option.innerHTML = monthsName[m];
         monthDropDown.appendChild(option)
     }
 
-    for(let y = 1950; y <= 2050; y++){
+    for(let y = 1950; y <= 2050; y++){ // loop to add year from 1950 to 2050
         let option = document.createElement("option");
         option.id = y;
         option.innerHTML = y;
@@ -107,7 +111,7 @@ function selectDropDown(){
     }
 
     let button = document.getElementById("run");
-    button.addEventListener("click", ()=>{
+    button.addEventListener("click", ()=>{ // adding event to button whent click show table as selected year and month
         const yearOptId = yearDropDown.options[yearDropDown.selectedIndex].id;
         const monthOptId = monthDropDown.options[monthDropDown.selectedIndex].id;
 
