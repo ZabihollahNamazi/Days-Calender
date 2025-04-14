@@ -82,8 +82,44 @@ function preNextBtn(){
         displayCalender(year, month)
     })
 }
+
+function selectDropDown(){
+    const monthsName = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+
+    let monthDropDown = document.getElementById("select-month");
+    let yearDropDown = document.getElementById("select-year");
+
+    for(let m = 0; m < monthsName.length; m++){
+        let option = document.createElement("option");
+        option.id = m;
+        option.innerHTML = monthsName[m];
+        monthDropDown.appendChild(option)
+    }
+
+    for(let y = 1950; y <= 2050; y++){
+        let option = document.createElement("option");
+        option.id = y;
+        option.innerHTML = y;
+        yearDropDown.appendChild(option)
+    }
+
+    let button = document.getElementById("run");
+    button.addEventListener("click", ()=>{
+        const yearOptId = yearDropDown.options[yearDropDown.selectedIndex].id;
+        const monthOptId = monthDropDown.options[monthDropDown.selectedIndex].id;
+
+        year = yearOptId;
+        month = monthOptId;
+        displayCalender(year, month);
+    })
+}
+
 window.onload = function() {
     
     displayCalender(year, month)
     preNextBtn()
+    selectDropDown()
 }
