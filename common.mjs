@@ -4,14 +4,33 @@ import daysData from "./days.json" with { type: "json" };
 // let firstDayOfWeek = 1;
 // let month = 3;
 // let year = 2025;
-let secondTuesday = 0;
+let secondTuesdayOfOctober = 0;
+let secondSaturdayOfMay = 0;
+let saturdayOfSeptember = 0;
+let lastFridayOfOctober = 0;
 export function getGreeting(dayCount, month, year) {
-    
-    if(month == 3){
-        if((new Date(year, month, dayCount).getDay()) == 2){
-            secondTuesday++;
-            if(secondTuesday == 2){
-                return "count";
+    if((new Date(year, month + 1, 0).getDate()) <= dayCount){ // this is because when to go to next month, needs to reset them to zero again -- if you don't then we you click next month btn for example from jan to dec an we you go to next year it does'nt show you any event days bcz the variables are not refreshed
+        secondTuesdayOfOctober = 0;
+        secondSaturdayOfMay = 0;
+        saturdayOfSeptember = 0;
+        lastFridayOfOctober = 0;
+
+    }
+    if(month == 9){ // october
+        if((new Date(year, month, dayCount).getDay()) == 2){ //if the index of the day is 2 which is tuesday
+            secondTuesdayOfOctober++; // adds 1 to the variable till it will be 2  - it can continue after 2 but we need it when its 2
+            if(secondTuesdayOfOctober == 2){ // when its 2 then we found the second tuesday
+                return `${dayCount} - ${daysData[0].name}`; // return the events day of second tuesday
+            }
+            else{
+                return dayCount;
+            }
+        }
+        if((new Date(year, month, dayCount).getDay()) == 5){
+            lastFridayOfOctober = (new Date(year, month + 1, 0).getDate()) - dayCount; // remaining of dayCount minus total days of the month
+            console.log(lastFridayOfOctober)
+            if(lastFridayOfOctober < 7){ // if the remaining is less than 7
+                return `${dayCount} - ${daysData[4].name}`;
             }
             else{
                 return dayCount;
@@ -20,6 +39,40 @@ export function getGreeting(dayCount, month, year) {
         else{
             return dayCount;
         }
+    }
+    if(month == 4){
+        if((new Date(year, month, dayCount).getDay()) == 6){
+            secondSaturdayOfMay++;
+            if(secondSaturdayOfMay == 2){
+                return `${dayCount} - ${daysData[1].name}`;
+            }
+            else{
+                return dayCount;
+            }
+        }
+        else{
+            return dayCount;
+        }
+    }
+    if(month == 8){
+        if((new Date(year, month, dayCount).getDay()) == 6){
+            saturdayOfSeptember++;
+            if(saturdayOfSeptember == 1){
+                return `${dayCount} - ${daysData[2].name}`;
+            }
+            if(saturdayOfSeptember == 3){
+                return `${dayCount} - ${daysData[3].name}`;
+            }
+            else{
+                return dayCount;
+            }
+        }
+        else{
+            return dayCount;
+        }
+    }
+    else{
+        return dayCount;
     }
 }
 // console.log(getGreeting(count, month, year));
