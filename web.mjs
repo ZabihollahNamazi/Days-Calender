@@ -47,7 +47,7 @@ function displayCalender(year, month){
 
     for(let i = fistDayOfWeek; i < 7; i++){ //this loop make cells from first day for first week or first row
         let firstRowDay = document.createElement("th");
-        firstRowDay.innerHTML = dayCount;
+        firstRowDay.innerHTML = getGreeting(dayCount, month, year); //dayCount
         dayCount++;
         firstRowDay.style.border = "solid black";
         firstRowOfCalender.appendChild(firstRowDay)
@@ -59,7 +59,7 @@ function displayCalender(year, month){
         for(let j = 0; j <= 6; j++){
             if (dayCount > totalDaysInMonth) break;
             let restDay = document.createElement("th");
-            restDay.innerHTML = dayCount;
+            restDay.innerHTML = getGreeting(dayCount, month, year); //dayCount;
             restDay.style.border = "solid black";
             newRow.appendChild(restDay);
             dayCount++;
