@@ -16,11 +16,17 @@ export function getGreeting(dayCount, month, year) {
         lastFridayOfOctober = 0;
 
     }
+
     if(month == 9){ // october
         if((new Date(year, month, dayCount).getDay()) == 2){ //if the index of the day is 2 which is tuesday
             secondTuesdayOfOctober++; // adds 1 to the variable till it will be 2  - it can continue after 2 but we need it when its 2
             if(secondTuesdayOfOctober == 2){ // when its 2 then we found the second tuesday
-                return `${dayCount} - ${daysData[0].name}`; // return the events day of second tuesday
+                const eventDay = {
+                    day: dayCount,
+                    name: daysData[0].name,
+                    link: daysData[0].descriptionURL
+                  };
+                return eventDay; //`${dayCount} - ${daysData[0].name}`; // return the events day of second tuesday
             }
             else{
                 return dayCount;
@@ -30,7 +36,12 @@ export function getGreeting(dayCount, month, year) {
             lastFridayOfOctober = (new Date(year, month + 1, 0).getDate()) - dayCount; // remaining of dayCount minus total days of the month
             console.log(lastFridayOfOctober)
             if(lastFridayOfOctober < 7){ // if the remaining is less than 7
-                return `${dayCount} - ${daysData[4].name}`;
+                const eventDay = {
+                    day: dayCount,
+                    name: daysData[4].name,
+                    link: daysData[4].descriptionURL
+                  };
+                return eventDay; //`${dayCount} - ${daysData[4].name}`;
             }
             else{
                 return dayCount;
@@ -44,7 +55,12 @@ export function getGreeting(dayCount, month, year) {
         if((new Date(year, month, dayCount).getDay()) == 6){
             secondSaturdayOfMay++;
             if(secondSaturdayOfMay == 2){
-                return `${dayCount} - ${daysData[1].name}`;
+                const eventDay = {
+                    day: dayCount,
+                    name: daysData[1].name,
+                    link: daysData[1].descriptionURL
+                  };
+                return eventDay; //`${dayCount} - ${daysData[1].name}`;
             }
             else{
                 return dayCount;
@@ -58,10 +74,20 @@ export function getGreeting(dayCount, month, year) {
         if((new Date(year, month, dayCount).getDay()) == 6){
             saturdayOfSeptember++;
             if(saturdayOfSeptember == 1){
-                return `${dayCount} - ${daysData[2].name}`;
+                const eventDay = {
+                    day: dayCount,
+                    name: daysData[2].name,
+                    link: daysData[2].descriptionURL
+                  };
+                return eventDay; //`${dayCount} - ${daysData[2].name}`;
             }
-            if(saturdayOfSeptember == 3){
-                return `${dayCount} - ${daysData[3].name}`;
+            else if(saturdayOfSeptember == 3){
+                const eventDay = {
+                    day: dayCount,
+                    name: daysData[3].name,
+                    link: daysData[3].descriptionURL
+                  };
+                return eventDay; //`${dayCount} - ${daysData[3].name}`;
             }
             else{
                 return dayCount;

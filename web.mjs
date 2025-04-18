@@ -14,7 +14,7 @@ const monthsName = [
     "July", "August", "September", "October", "November", "December"
   ];
 
-function displayCalender(year, month){
+async function displayCalender(year, month){
     let dateLabel = document.getElementById("date-label");// h3 tag to show the date
     dateLabel.innerHTML = `${year}-${monthsName[month]}`; // h3 tag to show the date
 
@@ -47,10 +47,20 @@ function displayCalender(year, month){
 
     for(let i = fistDayOfWeek; i < 7; i++){ //this loop make cells from first day for first week or first row
         let firstRowDay = document.createElement("th");
-        firstRowDay.innerHTML = getGreeting(dayCount, month, year); //dayCount
-        dayCount++;
-        firstRowDay.style.border = "solid black";
-        firstRowOfCalender.appendChild(firstRowDay)
+        const getGreetingData = getGreeting(dayCount, month, year); //dayCount;
+        if(typeof getGreetingData == "object"){
+            await showGreeting(getGreetingData);
+            firstRowDay.innerHTML = `${getGreetingData.day} - ${getGreetingData.name}`;
+            firstRowDay.style.border = "solid black";
+            firstRowOfCalender.appendChild(firstRowDay)
+            dayCount++;
+        }
+        else{
+            firstRowDay.innerHTML = dayCount;
+            firstRowDay.style.border = "solid black";
+            firstRowOfCalender.appendChild(firstRowDay)
+            dayCount++;
+        }
     }
     table.appendChild(firstRowOfCalender)
 
@@ -58,15 +68,35 @@ function displayCalender(year, month){
         let newRow = document.createElement("tr");
         for(let j = 0; j <= 6; j++){
             if (dayCount > totalDaysInMonth) break;
+
             let restDay = document.createElement("th");
-            restDay.innerHTML = getGreeting(dayCount, month, year); //dayCount;
-            restDay.style.border = "solid black";
-            newRow.appendChild(restDay);
-            dayCount++;
+            const getGreetingData = getGreeting(dayCount, month, year); //dayCount;
+            if(typeof getGreetingData == "object"){
+                await showGreeting(getGreetingData);
+                restDay.innerHTML = `${getGreetingData.day} - ${getGreetingData.name}`;
+                restDay.style.border = "solid black";
+                newRow.appendChild(restDay);
+                dayCount++;
+            }
+            else{
+                restDay.innerHTML = dayCount;
+                restDay.style.border = "solid black";
+                newRow.appendChild(restDay);
+                dayCount++;
+            }
+            
         }
         table.appendChild(newRow)
     }
 }
+
+async function showGreeting(getGreetingData) { // this function for fetching text data from url and add it as li to ul
+      let li = document.createElement("li");
+      let response = await fetch(getGreetingData.link);
+      const resDataText = await response.text();
+      li.innerHTML = resDataText;
+      document.querySelector("ul").appendChild(li);
+  }
 
 function preNextBtn(){
     let previousBtn = document.getElementById("previous");
@@ -79,6 +109,7 @@ function preNextBtn(){
             year--;
         }
         displayCalender(year, month)
+        document.querySelector("ul").innerHTML = "";
     })
 
     next.addEventListener("click", ()=>{
@@ -88,6 +119,7 @@ function preNextBtn(){
             year++;
         }
         displayCalender(year, month)
+        document.querySelector("ul").innerHTML = "";
     })
 }
 
@@ -112,6 +144,7 @@ function selectDropDown(){
 
     let button = document.getElementById("run");
     button.addEventListener("click", ()=>{ // adding event to button whent click show table as selected year and month
+        document.querySelector("ul").innerHTML = "";
         const yearOptId = yearDropDown.options[yearDropDown.selectedIndex].id;
         const monthOptId = monthDropDown.options[monthDropDown.selectedIndex].id;
 

@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="This is a calendar app that displays events and holidays using JavaScript.">
         <script type="module" src="common.mjs"></script>
         <script type="module" src="web.mjs"></script>
+        <title>Days Calender</title>
     </head>
     <body>
         <br>
@@ -20,13 +23,16 @@
         </div>
         <br>
         <div>
-            <select name="select-year" id="select-year">
+            <label for="select-year">Select a year:</label>
+            <select name="select-year" id="select-year" style="margin: 4px; padding: 4px;">
                 <option value="">Select a Year</option>
             </select>
-            <select name="select-month" id="select-month">
+            <label for="select-month">Select a month:</label>
+            <select name="select-month" id="select-month" style="margin: 4px; padding: 4px;">
                 <option value="">Select a Month</option>
             </select>
-            <button id="run">Run</button>
+            <button id="run" style="margin: 4px; padding: 4px;">Run</button>
         </div>
+        <ul></ul>
     </body>
 </html>
